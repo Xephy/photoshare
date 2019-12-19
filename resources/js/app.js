@@ -5,7 +5,7 @@ import store from "./store";
 import App from "./App.vue";
 
 const createApp = async () => {
-    await store.dispatch("auth/currentUser")
+    await store.dispatch("auth/currentUser");
 
     new Vue({
         el: '#app',
