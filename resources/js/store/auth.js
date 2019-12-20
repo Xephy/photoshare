@@ -4,7 +4,7 @@ const state = {
     user: null,
     apiStatus: null,
     loginErrorMessages: null,
-    registerErrorMessage: null
+    registerErrorMessages: null,
 };
 
 const getters = {
@@ -23,18 +23,18 @@ const mutations = {
         state.loginErrorMessages = messages;
     },
     setRegisterErrorMessages(state, messages) {
-        state.registerErrorMessage = messages;
+        state.registerErrorMessages = messages;
     }
 };
 
 const actions = {
     async register(context, data) {
         context.commit('setApiStatus', null);
-        const response = await axios.post("api/register", data);
+        const response = await axios.post("/api/register", data);
 
         if (response.status === CREATED) {
             context.commit("setApiStatus", true);
-            context.commit("setUser", response, data);
+            context.commit("setUser", response.data);
             return false;
         }
 
