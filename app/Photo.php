@@ -2,8 +2,9 @@
 
 namespace App;
 
-use Illuminate\Support\Arr;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 
 class Photo extends Model{
     protected $keyType = 'string';
@@ -22,18 +23,19 @@ class Photo extends Model{
 
     private function setId()
     {
-        $this->attributes["id"] = $this->getRandomId();
+        $this->attributes['id'] = $this->getRandomId();
     }
 
     /**
      * @return string
-     * @throws \Exception
+     * @throws Exception
      */
     private function getRandomId()
     {
-        $characters = array_merge(
-            range(0, 9), range('a', "z"),
-            range('A', 'Z'), ['-','_']
+        $characters = array_merge(range(0, 9), range('a', 'z'), range('A', 'Z'), [
+                '-',
+                '_'
+            ]
         );
 
         $length = count($characters);

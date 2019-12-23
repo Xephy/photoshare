@@ -3,9 +3,8 @@
 namespace Tests\Feature;
 
 use App\User;
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class LogoutApiTest extends TestCase{
     use RefreshDatabase;
@@ -27,17 +26,5 @@ class LogoutApiTest extends TestCase{
 
         $response->assertStatus(200);
         $this->assertGuest();
-    }
-
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function testExample()
-    {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
     }
 }

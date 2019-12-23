@@ -3,9 +3,8 @@
 namespace Tests\Feature;
 
 use App\User;
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class RegisterApiTest extends TestCase{
     use RefreshDatabase;
@@ -28,17 +27,5 @@ class RegisterApiTest extends TestCase{
         $this->assertEquals($data["name"], $user->name);
 
         $response->assertStatus(201)->assertJson(['name' => $user->name]);
-    }
-
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function testExample()
-    {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
     }
 }

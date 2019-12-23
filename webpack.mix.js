@@ -14,4 +14,4 @@ const mix = require('laravel-mix');
 mix.browserSync('xephy.com')
     .js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
-    .version()
+    .version();

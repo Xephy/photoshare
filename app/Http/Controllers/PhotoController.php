@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePhoto;
 use App\Photo;
-use Illuminate\Http\Request;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -17,11 +17,12 @@ class PhotoController extends Controller{
 
     public function create(StorePhoto $request)
     {
-        $extension = $request->photo->extention();
+        $extension = $request->photo->extension();
 
         $photo = new Photo();
 
         $photo->filename = $photo->id . '.' . $extension;
+
         Storage::cloud()->putFileAs('', $request->photo, $photo->filename, 'public');
 
         DB::beginTransaction();
@@ -30,7 +31,7 @@ class PhotoController extends Controller{
         {
             Auth::user()->photos()->save($photo);
             DB::commit();
-        } catch(\Exception $exception)
+        } catch(Exception $exception)
         {
             DB::rollBack();
             Storage::cloud()->delete($photo->filename);

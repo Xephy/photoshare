@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Photo;
 use App\User;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Schema;
@@ -32,6 +31,7 @@ class PhotoSubmitApiTest extends TestCase
             ]);
 
         $response->assertStatus(201);
+
         $photo = Photo::first();
 
         $this->assertRegExp('/^[0-9a-zA-Z-_]{12}$/',$photo->id);
@@ -75,17 +75,5 @@ class PhotoSubmitApiTest extends TestCase
         $response->assertStatus(500);
 
         $this->assertEmpty(Photo::all());
-    }
-
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function testExample()
-    {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
     }
 }
