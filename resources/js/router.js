@@ -6,15 +6,22 @@ import Login from "./pages/Login";
 
 import SystemError from "./pages/errors/system";
 
+import PhotoDetail from "./pages/PhotoDetail";
+
 import store from "./store";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
     {
         path: '/',
         component: PhotoList
     }, {
+        path: '/photo/:id',
+        component: PhotoDetail,
+        props: true
+    },
+    {
         path: '/login',
         component: Login,
         beforeEnter(to, from, next) {
@@ -28,11 +35,11 @@ const routes = [
         path: "/500",
         component: SystemError
     }
-]
+];
 
 const router = new VueRouter({
     mode: 'history',
     routes
-})
+});
 
 export default router

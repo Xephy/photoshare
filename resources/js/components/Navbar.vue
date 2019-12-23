@@ -5,7 +5,7 @@
         </RouterLink>
         <div class="navbar__menu">
             <div v-if="isLogin" class="navbar__item">
-                <button class="button">
+                <button class="button" @click="showForm = ! showForm">
                     <i class="icon ion-md-add"></i>
                     Submit a Photo
                 </button>
@@ -19,18 +19,30 @@
                 </RouterLink>
             </div>
         </div>
+        <PhotoForm v-model="showForm"/>
     </nav>
 </template>
 
 <script>
+    import PhotoForm from "./PhotoForm";
+
     export default {
         name: "Navbar",
+        components: {PhotoForm},
+        comments: {
+            PhotoForm
+        },
+        data() {
+            return {
+                showForm: false
+            }
+        },
         computed: {
             isLogin() {
                 return this.$store.getters["auth/check"];
             },
             username() {
-		        return this.$store.getters["auth/username"];
+                return this.$store.getters["auth/username"];
             }
         }
     }

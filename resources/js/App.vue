@@ -5,6 +5,7 @@
         </header>
         <main>
             <div class="container">
+                <Message/>
                 <RouterView />
             </div>
         </main>
@@ -13,23 +14,24 @@
 </template>
 
 <script>
-	import Navbar from "./components/Navbar";
+    import Message from "./components/Message";
+    import Navbar from "./components/Navbar";
     import Footer from "./components/Footer";
-    import { INTERNAL_SERVER_ERROR } from "./util";
+    import {INTERNAL_SERVER_ERROR} from "./util";
 
     export default {
-		name: "App",
-        components: {Footer, Navbar},
-        computed:{
-		    errorCode(){
-		        return this.$store.state.error.code;
+        name: "App",
+        components: {Message, Footer, Navbar},
+        computed: {
+            errorCode() {
+                return this.$store.state.error.code;
             }
         },
-        watch:{
-		    errorCode:{
-		        handler(val){
-		            if(val=== INTERNAL_SERVER_ERROR){
-		                this.$router.push("/500");
+        watch: {
+            errorCode: {
+                handler(val) {
+                    if (val === INTERNAL_SERVER_ERROR) {
+                        this.$router.push("/500");
                     }
                 },
                 immediate:true
