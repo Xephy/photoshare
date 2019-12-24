@@ -23,7 +23,7 @@ class PhotoController extends Controller{
 
         $photo->filename = $photo->id . '.' . $extension;
 
-        Storage::cloud()->putFileAs('', $request->photo, $photo->filename, 'public');
+        Storage::disk('local')->putFileAs('', $request->photo, $photo->filename, 'public');
 
         DB::beginTransaction();
 
@@ -34,7 +34,7 @@ class PhotoController extends Controller{
         } catch(Exception $exception)
         {
             DB::rollBack();
-            Storage::cloud()->delete($photo->filename);
+            Storage::disk('local')->delete($photo->filename);
             throw $extension;
         }
 
