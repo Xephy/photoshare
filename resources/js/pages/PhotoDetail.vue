@@ -8,7 +8,7 @@
             <button class="button button--like" title="Like photo">
                 <i class="icon ion-md-heart"></i>12
             </button>
-            <a href="`/photo/${photo.id}/download`" class="button" title="Download photo">
+            <a :href="`/photos/${photo.id}/download`" class="button" title="Download photo">
                 <i class="icon ion-md-arrow-round-down"></i>Download
             </a>
             <h2 class="photo-detail__title">
