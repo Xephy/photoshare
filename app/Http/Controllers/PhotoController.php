@@ -32,7 +32,7 @@ class PhotoController extends Controller{
 
         $photo->filename = $photo->id . '.' . $extension;
 
-        Storage::disk('local')->putFileAs('', $request->photo, $photo->filename, 'public');
+        Storage::disk('public')->putFileAs('', $request->photo, $photo->filename, 'public');
 
         DB::beginTransaction();
 
@@ -43,7 +43,7 @@ class PhotoController extends Controller{
         } catch(Exception $exception)
         {
             DB::rollBack();
-            Storage::disk('local')->delete($photo->filename);
+            Storage::disk('public')->delete($photo->filename);
             throw $extension;
         }
 
@@ -57,7 +57,7 @@ class PhotoController extends Controller{
 
     public function download(Photo $photo)
     {
-        if( ! Storage::disk('local')->exists($photo->filename))
+        if( ! Storage::disk('public')->exists($photo->filename))
         {
             abort(404);
         }
@@ -67,6 +67,6 @@ class PhotoController extends Controller{
             'Content-Disposition' => 'attachment; filename="' . $photo->filename . '"',
         ];
 
-        return response(Storage::disk('local')->get($photo->filename), 200, $headers);
+        return response(Storage::disk('public')->get($photo->filename), 200, $headers);
     }
 }

@@ -23,7 +23,7 @@ class PhotoSubmitApiTest extends TestCase
      * @test
      */
     public function should_ファイルをアップロードできる(){
-        Storage::fake('local');
+        Storage::fake('public');
 
         $response = $this->actingAs($this->user)
             ->json('POST',route('photo.create'),[
@@ -36,7 +36,7 @@ class PhotoSubmitApiTest extends TestCase
 
         $this->assertRegExp('/^[0-9a-zA-Z-_]{12}$/',$photo->id);
 
-        Storage::disk('local')->assertExists($photo->filename);
+        Storage::disk('public')->assertExists($photo->filename);
     }
 
     /**
@@ -46,7 +46,7 @@ class PhotoSubmitApiTest extends TestCase
     {
         Schema::drop('photos');
 
-        Storage::fake('local');
+        Storage::fake('public');
 
         $response = $this->actingAs($this->user)
             ->json('POST',route('photo.create'),[
@@ -55,7 +55,7 @@ class PhotoSubmitApiTest extends TestCase
 
         $response->assertStatus(500);
 
-        $this->assertEquals(0, count(Storage::disk('local')->files()));
+        $this->assertEquals(0, count(Storage::disk('public')->files()));
     }
 
     /**
