@@ -31,8 +31,10 @@
             Loader
         },
         props: {
-            value: Boolean,
-            required: true
+            value: {
+                type: Boolean,
+                required: true
+            },
         },
         data() {
             return {
@@ -66,6 +68,7 @@
             },
             reset() {
                 this.preview = '';
+                this.photo = null;
                 this.$el.querySelector('input[type="file"]').value = null;
             }, async submit() {
                 this.loading = true;
@@ -77,7 +80,7 @@
                 this.loading = false;
 
                 if (response.status === UNPROCESSABLE_ENTITY) {
-                    this.errors = response.data.errorsl;
+                    this.errors = response.data.errors;
                     return false;
                 }
 
@@ -94,7 +97,7 @@
                     timeout: 6000
                 });
 
-                this.$router.push('/photo/${response.data.id}');
+                this.$router.push(`/photos/${response.data.id}`);
             }
         }
     }
