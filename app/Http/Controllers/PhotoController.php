@@ -15,7 +15,8 @@ class PhotoController extends Controller{
     {
         $this->middleware('auth')->except([
             'index',
-            'download'
+            'download',
+            'show'
         ]);
     }
 
@@ -63,10 +64,19 @@ class PhotoController extends Controller{
         }
 
         $headers = [
-            'Content-Type' => 'application/octet-stream',
+            'Content-Type'        => 'application/octet-stream',
             'Content-Disposition' => 'attachment; filename="' . $photo->filename . '"',
         ];
 
         return response(Storage::disk('public')->get($photo->filename), 200, $headers);
+    }
+
+    /**
+     * @param string $id
+     */
+    public function show(string $id)
+    {
+        $photo = Photo::where('id', $id)->with(['owner'])->first();
+        return $photo ?? abort(404);
     }
 }
