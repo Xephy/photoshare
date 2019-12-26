@@ -26,19 +26,21 @@ class PhotoDetailApiTest extends TestCase{
         ]));
 
         $response->assertStatus(200)->assertJsonFragment([
-                'id'       => $photo->id,
-                'url'      => $photo->url,
-                'owner'    => [
-                    'name' => $photo->owner->name,
-                ],
-                'comments' => $photo->comments->sortByDesc('id')->map(function ($comment){
-                        return [
-                            'author'  => [
-                                'name' => $comment->author->name,
-                            ],
-                            'content' => $comment->content,
-                        ];
-                    })->all(),
-            ]);
+            'id'            => $photo->id,
+            'url'           => $photo->url,
+            'owner'         => [
+                'name' => $photo->owner->name,
+            ],
+            'comments'      => $photo->comments->sortByDesc('id')->map(function ($comment){
+                return [
+                    'author'  => [
+                        'name' => $comment->author->name,
+                    ],
+                    'content' => $comment->content,
+                ];
+            })->all(),
+            'liked_by_user' => FALSE,
+            'likes_count'   => 0,
+        ]);
     }
 }

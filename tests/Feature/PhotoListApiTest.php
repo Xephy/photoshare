@@ -22,16 +22,18 @@ class PhotoListApiTest extends TestCase{
 
         $expected_data = $photos->map(function ($photo){
             return [
-                'id'    => $photo->id,
-                'url'   => $photo->url,
-                'owner' => [
+                'id'            => $photo->id,
+                'url'           => $photo->url,
+                'owner'         => [
                     'name' => $photo->owner->name,
-                ]
+                ],
+                'likes_count'   => 0,
+                'liked_by_user' => FALSE,
             ];
         })->all();
 
         $response->assertStatus(200)->assertJsonCount(5, 'data')->assertJsonFragment([
-                'data' => $expected_data,
-            ]);
+            'data' => $expected_data,
+        ]);
     }
 }

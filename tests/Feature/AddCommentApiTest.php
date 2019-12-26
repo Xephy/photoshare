@@ -28,17 +28,17 @@ class AddCommentApiTest extends TestCase{
         $content = 'sample content';
 
         $response = $this->actingAs($this->user)->json('POST', route('photo.comment', [
-                'photo' => $photo->id,
-            ]), compact('content'));
+            'photo' => $photo->id,
+        ]), compact('content'));
 
         $comments = $photo->comments()->get();
 
         $response->assertStatus(201)->assertJsonFragment([
-                'author'  => [
-                    'name' => $this->user->name,
-                ],
-                'content' => $content,
-            ]);
+            'author'  => [
+                'name' => $this->user->name,
+            ],
+            'content' => $content,
+        ]);
 
         $this->assertEquals(1, $comments->count());
         $this->assertEquals($content, $comments[0]->content);
