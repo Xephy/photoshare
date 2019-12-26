@@ -5,6 +5,7 @@ namespace App;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 
@@ -17,6 +18,7 @@ class Photo extends Model{
         'id',
         'owner',
         'url',
+        'comments',
     ];
     protected $perPage = 15;
 
@@ -71,5 +73,13 @@ class Photo extends Model{
     public function getUrlAttribute()
     {
         return Storage::disk('public')->url($this->attributes['filename']);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany('App\Comment')->orderBy('id', 'desc');
     }
 }
