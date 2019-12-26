@@ -1,4 +1,4 @@
-import {OK, CREATED, UNPROCESSABLE_ENTITY} from "../util";
+import {CREATED, OK, UNPROCESSABLE_ENTITY} from "../util";
 
 const state = {
     user: null,
@@ -49,7 +49,7 @@ const actions = {
         context.commit("setApiStatus", null);
         const response = await axios.post("/api/login", data).catch(err => err.response || err);
 
-        if (response.status === CREATED) {
+        if (response.status === OK) {
             context.commit("setApiStatus", true);
             context.commit("setUser", response.data);
             return false;
@@ -67,8 +67,8 @@ const actions = {
         const response = await axios.post("/api/logout");
 
         if (response.status === OK) {
-            context.commit('setApiStatus', true)
-            context.commit('setUser', null)
+            context.commit('setApiStatus', true);
+            context.commit('setUser', null);
             return false
         }
 
@@ -80,7 +80,7 @@ const actions = {
         const response = await axios.get("/api/user");
         const user = response.data || null;
 
-        if (response.status == OK) {
+        if (response.status === OK) {
             context.commit("setApiStatus", true);
             context.commit("setUser", user);
             return false;
