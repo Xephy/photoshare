@@ -82,13 +82,13 @@
             },
             async register() {
                 await this.$store.dispatch("auth/register", this.registerForm);
-                if(this.apiStatus){
+                if (this.apiStatus) {
                     this.$router.push("/");
                 }
             },
-            clearError(){
-                this.$store.commit("auth/setLoginErrorMessages",null);
-                this.$store.commit("auth/setRegisterErrorMessages",null);
+            clearError() {
+                this.$store.commit("auth/setLoginErrorMessages", null);
+                this.$store.commit("auth/setRegisterErrorMessages", null);
             }
         },
         computed: {
@@ -98,7 +98,7 @@
                 registerErrors: state => state.auth.registerErrorMessages,
             })
         },
-        created(){
+        created() {
             this.clearError()
         }
     }

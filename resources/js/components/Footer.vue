@@ -8,21 +8,21 @@
 </template>
 
 <script>
-    import {mapState, mapGetters} from "vuex";
+    import {mapGetters, mapState} from "vuex";
 
     export default {
         name: "Footer",
         methods: {
             async logout() {
                 await this.$store.dispatch("auth/logout");
-                if(this.apiStatus){
+                if (this.apiStatus) {
                     this.$router.push("/login");
                 }
             }
         },
         computed: {
             ...mapState({
-               apiStatus:state=>state.auth.apiStatus
+                apiStatus: state => state.auth.apiStatus
             }),
             ...mapGetters({
                 isLogin: "auth/check"
