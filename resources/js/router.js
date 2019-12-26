@@ -5,6 +5,7 @@ import PhotoList from "./pages/PhotoList";
 import Login from "./pages/Login";
 
 import SystemError from "./pages/errors/system";
+import NotFound from "./pages/errors/NotFound";
 
 import PhotoDetail from "./pages/PhotoDetail";
 
@@ -38,6 +39,9 @@ const routes = [
     }, {
         path: "/500",
         component: SystemError
+    }, {
+        path: '*',
+        component: NotFound
     }
 ];
 

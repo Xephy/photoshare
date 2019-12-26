@@ -24,6 +24,10 @@ Route::post('/photos/{photo}/comments', 'PhotoController@addComment')->name('pho
 Route::put('/photos/{id}/like', 'PhotoController@like')->name('photo.like');
 Route::delete('/photos/{id}/like', 'PhotoController@unlike');
 
+Route::get('/refresh-token', function (Request $request){
+    $request->session()->regenerateToken();
+    return response()->json();
+});
 
 Route::middleware('auth:api')->get('/user', function (Request $request){
     return $request->user();

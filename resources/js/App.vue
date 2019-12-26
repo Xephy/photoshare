@@ -1,15 +1,15 @@
 <template>
     <div>
         <header>
-            <Navbar />
+            <Navbar/>
         </header>
         <main>
             <div class="container">
                 <Message/>
-                <RouterView />
+                <RouterView/>
             </div>
         </main>
-        <Footer />
+        <Footer/>
     </div>
 </template>
 
@@ -17,7 +17,7 @@
     import Message from "./components/Message";
     import Navbar from "./components/Navbar";
     import Footer from "./components/Footer";
-    import {INTERNAL_SERVER_ERROR} from "./util";
+    import {INTERNAL_SERVER_ERROR, NOT_FOUND, UNAUTHORIZED} from "./util";
 
     export default {
         name: "App",
@@ -29,16 +29,22 @@
         },
         watch: {
             errorCode: {
-                handler(val) {
+                async handler(val) {
                     if (val === INTERNAL_SERVER_ERROR) {
                         this.$router.push("/500");
+                    } else if (val === UNAUTHORIZED) {
+                        await axios.get('/api/refresh-token');
+                        this.$store.commit('auth/setUser', null);
+                        this.$router.push('/login');
+                    } else if (val === NOT_FOUND) {
+                        this.$route.push('/not-found');
                     }
                 },
-                immediate:true
+                immediate: true
             }
         },
-        $route (){
-		    this.$store.commit("error/setCode",null);
+        $route() {
+            this.$store.commit("error/setCode", null);
         }
     }
 </script>
